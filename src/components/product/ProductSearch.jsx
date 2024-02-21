@@ -1,11 +1,11 @@
 import { Filters } from '@/components/common';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { clearRecentSearch, removeSelectedRecent, setTextFilter } from '@/redux/actions/filterActions';
 
 const ProductSearch = () => {
-  const history = useHistory();
+  const history = useNavigate();
 
   const {
     productsLength, filter, products, isLoading

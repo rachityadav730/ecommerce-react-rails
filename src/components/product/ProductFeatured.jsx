@@ -2,10 +2,10 @@ import { ImageLoader } from '@/components/common';
 import PropType from 'prop-types';
 import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ProductFeatured = ({ product }) => {
-  const history = useHistory();
+  const history = useNavigate();
   const onClickItem = () => {
     if (!product) return;
 

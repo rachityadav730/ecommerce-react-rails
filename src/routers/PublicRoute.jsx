@@ -1,56 +1,46 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
-import { ADMIN_DASHBOARD, SIGNIN, SIGNUP } from '@/constants/routes';
-import PropType from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Redirect, Route } from 'react-router-dom';
+import { Navigate, Route, Outlet } from 'react-router-dom';
 
-const PublicRoute = ({
-  isAuth, role, component: Component, path, ...rest
-}) => (
+import { ADMIN_DASHBOARD, SIGNIN, SIGNUP } from '@/constants/routes';
+
+const PublicRoute = ({ isAuth, role, element: Element, path, ...rest }) => (
   <Route
     {...rest}
-    // eslint-disable-next-line consistent-return
-    render={(props) => {
-      // eslint-disable-next-line react/prop-types
-      const { from } = props.location.state || { from: { pathname: '/' } };
-
-      if (isAuth && role === 'ADMIN') {
-        return <Redirect to={ADMIN_DASHBOARD} />;
-      }
-
-      if ((isAuth && role === 'USER') && (path === SIGNIN || path === SIGNUP)) {
-        return <Redirect to={from} />;
-      }
-
-      return (
+    element={
+      (isAuth && role === 'ADMIN') ? (
+        <Navigate to={ADMIN_DASHBOARD} />
+      ) : ((isAuth && role === 'USER') && (path === SIGNIN || path === SIGNUP)) ? (
+        <Navigate to="/" />
+      ) : (
         <main className="content">
-          <Component {...props} />
+          <Element {...rest} />
         </main>
-      );
-    }}
+      )
+    }
   />
 );
 
 PublicRoute.defaultProps = {
   isAuth: false,
   role: 'USER',
-  path: '/'
+  path: '/',
 };
 
 PublicRoute.propTypes = {
-  isAuth: PropType.bool,
-  role: PropType.string,
-  component: PropType.func.isRequired,
-  path: PropType.string,
-  // eslint-disable-next-line react/require-default-props
-  rest: PropType.any
+  isAuth: PropTypes.bool,
+  role: PropTypes.string,
+  element: PropTypes.elementType.isRequired,
+  path: PropTypes.string,
+  rest: PropTypes.any, // Adjusted PropTypes for rest
 };
 
-const mapStateToProps = ({ auth }) => ({
-  isAuth: !!auth,
-  role: auth?.role || ''
+const mapStateToProps = (state) => ({
+  isAuth: !!state.auth,
+  role: state.auth?.role || '',
 });
 
 export default connect(mapStateToProps)(PublicRoute);
