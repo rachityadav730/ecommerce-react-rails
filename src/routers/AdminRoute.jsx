@@ -4,7 +4,7 @@ import { AdminNavigation, AdminSideBar } from '@/components/common';
 import PropType from 'prop-types';
 import React from 'react';
 import { connect } from 'react-redux';
-import { useNavigate, Route } from 'react-router-dom';
+import { Navigate,Routes, Route } from 'react-router-dom';
 
 // const AdminRoute = ({
 //   isAuth, role, component: Component, ...rest
@@ -37,17 +37,17 @@ const AdminRoute = ({ isAuth, role, element: Element, ...rest }) => {
     <Routes>
       <Route
         {...rest}
-        element={
+        element={(props) => ( // Include props here
           <>
             <AdminNavigation />
             <main className="content-admin">
               <AdminSideBar />
               <div className="content-admin-wrapper">
-              <Component {...props} />
+                <Element {...props} /> {/* Pass props to Element */}
               </div>
             </main>
           </>
-        }
+        )}
       />
     </Routes>
   );

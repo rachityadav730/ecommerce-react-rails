@@ -14,6 +14,8 @@ import PublicRoute from './PublicRoute';
 // v5.0 breaks navigation
 export const history = createBrowserHistory();
 
+console.log("SDfasfasdfasd")
+
 const AppRouter = () => (
   <Router history={history}>
     <>
