@@ -1,16 +1,18 @@
 import React, { StrictMode } from 'react';
 import PropType from 'prop-types';
+import { Preloader } from '@/components/common';
 import { Provider } from 'react-redux';
 import AppRouter from './routers/AppRouter';
-// import { PersistGate } from 'redux-persist/integration/react';
+
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 const App = ({ store, persistor }) => (
   <StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={<Preloader />} persistor={persistor}> */}
+      <PersistGate loading={<Preloader />} persistor={persistor}>
         <AppRouter />
-      {/* </PersistGate> */}
+      </PersistGate>
     </Provider>
   </StrictMode>
 );

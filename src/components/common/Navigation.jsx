@@ -66,6 +66,7 @@ const Navigation = () => {
       />
     );
   }
+  console.log("read values ROUTE", ROUTE)
   return (
     <nav className="navigation" ref={navbar}>
       <div className="logo">
